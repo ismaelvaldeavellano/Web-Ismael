@@ -1,1 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ismael Valdeavellano | Film Director & Video Marketer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Roboto:wght@200;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --line-color: rgba(255, 255, 255, 0.15);
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --section-title-size: 38px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0 8%;
+            overflow-x: hidden;
+        }
+
+        h1, .bold-title { font-family: 'Roboto', sans-serif; font-weight: 800; text-transform: uppercase; }
+        h2, .light-subtitle { font-family: 'Roboto', sans-serif; font-weight: 200; text-transform: uppercase; letter-spacing: 1px; }
+        p { font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.6; color: var(--text-dim); }
+
+        hr { border: 0; border-top: 1px solid var(--line-color); margin: 50px 0; }
+
+        header { 
+            padding: 100px 0 40px 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+        }
+        .hero-name { font-size: 85px; margin: 0; letter-spacing: -2px; line-height: 0.9; }
+        .sub-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 20px 0; 
+            margin-top: 15px;
+            width: fit-content;
+            border-top: 1px solid var(--line-color); 
+        }
+        .vertical-line { border-left: 1px solid var(--line-color); height: 18px; margin: 0 25px; }
+        .sub-header span { font-family: 'Roboto', sans-serif; font-weight: 200; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; color: var(--text-dim); }
+
+        .bio-section { display: flex; gap: 50px; align-items: center; margin: 60px 0; }
+        .bio-img-container { width: 45%; overflow: hidden; border-radius: 20px; }
+        .bio-img { width: 100%; display: block; transition: var(--transition); filter: grayscale(40%); }
+        .bio-img:hover { transform: scale(1.05); filter: grayscale(0%); }
+        .bio-text { width: 55%; font-size: 18px; }
+
+        .laurels-section { display: flex; justify-content: space-around; align-items: center; padding: 15px 0; }
+        .laurel-item { width: 110px; transition: var(--transition); opacity: 0.7; }
+        .laurel-item:hover { transform: translateY(-8px) scale(1.1); opacity: 1; }
+        .panoramic-text { font-size: 11px; max-width: 130px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; }
+
+        .section-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px;
+        }
+        .unified-title { font-size: var(--section-title-size); margin: 0; }
+        
+        /* CLIENT WORK GRID */
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 30px 0; }
+        
+        /* Ajuste para que el contenedor respete el aspect ratio del embed */
+        .video-container { 
+            position: relative; 
+            width: 100%;
+            aspect-ratio: 9/16; /* Formato vertical por defecto */
+            border-radius: 15px; 
+            overflow: hidden; 
+            transition: var(--transition);
+            background: #000;
+        }
+
+        /* Clase especial si quieres que los horizontales se vean distintos, 
+           pero por diseño de grid 1:1:1 suele ser mejor que todos sigan el mismo ratio o usar object-fit */
+        .video-container.horizontal { aspect-ratio: 16/9; }
+
+        .video-container:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        
+        .counter { font-size: 38px; font-family: 'Roboto', sans-serif; font-weight: 800; }
+
+        .projects-container { display: flex; gap: 40px; margin-bottom: 40px; }
+        .project-card { width: 50%; display: flex; flex-direction: column; gap: 20px; }
+        
+        .still-wrapper { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            overflow: hidden; 
+            border-radius: 12px; 
+            background: #1a1a1a;
+        }
+        .still-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: var(--transition); 
+            cursor: pointer;
+        }
+        .still-wrapper:hover .still-img { 
+            transform: scale(1.1); 
+            filter: brightness(1.1); 
+        }
+
+        .project-credits { font-size: 13px; border-left: 1px solid var(--line-color); padding-left: 15px; color: var(--text-dim); }
+        .project-credits strong { color: var(--text-main); font-size: 16px; display: block; margin-bottom: 5px; }
+
+        .contact-section { padding: 60px 0 120px 0; text-align: center; }
+        .contact-btns { display: flex; justify-content: center; gap: 25px; margin-top: 40px; }
+        .btn { 
+            padding: 14px 35px; 
+            border: 1px solid var(--text-main); 
+            color: var(--text-main); 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-size: 14px; 
+            font-weight: 600;
+            transition: var(--transition); 
+        }
+        .btn:hover { background: var(--text-main); color: var(--bg-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+
+        @media (max-width: 900px) {
+            .hero-name { font-size: 55px; }
+            .bio-section, .video-grid, .projects-container { flex-direction: column; }
+            .bio-img-container, .bio-text, .project-card { width: 100%; }
+            .video-container { aspect-ratio: 16/9; } /* En móvil se ven mejor horizontales */
+        }
+    </style>
+</head>
+<body>
+
+    <header data-aos="fade-down">
+        <h1 class="hero-name">Ismael Valdeavellano</h1>
+        <div class="sub-header">
+            <span>Film Director</span>
+            <div class="vertical-line"></div>
+            <span>Video Marketer</span>
+        </div>
+    </header>
+
+    <section class="bio-section" data-aos="fade-up">
+        <div class="bio-img-container">
+            <img src="https://i.imgur.com/A8MMYz9.png" class="bio-img" alt="Ismael Valdeavellano">
+        </div>
+        <div class="bio-text">
+            <p>A la temprana edad de 18 años, Ismael Valdeavellano es un cineasta chileno reconocido por su visión autoral y su proyección internacional. Director premiado en distintos festivales, ha desarrollado una trayectoria marcada por una búsqueda constante de autenticidad y riesgo creativo.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="laurels-section" data-aos="fade-in">
+        <span class="panoramic-text">Official Selection & Awards</span>
+        <img src="https://i.imgur.com/pjnlOSv.png" class="laurel-item" alt="Award">
+        <img src="https://i.imgur.com/0EpZz3u.png" class="laurel-item" alt="Award">
+        <span class="panoramic-text">|</span>
+        <img src="https://i.imgur.com/nTGcsB6.png" class="laurel-item" alt="Award">
+    </section>
+
+    <hr>
+
+    <section data-aos="fade-up">
+        <div class="section-header">
+            <h2 class="light-subtitle unified-title">Client Work</h2>
+            <div class="counter-container">
+                <span class="light-subtitle" style="font-size: 14px;">Total Views: </span>
+                <span id="count" class="counter">0</span><span class="counter">M</span>
+            </div>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1167024113?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="RedBull Symphonic"></iframe>
+            </div>
+
+            <div class="video-container" style="aspect-ratio: 16/9;">
+                <iframe src="https://player.vimeo.com/video/1167024762?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="HACKATALENTREEL V2"></iframe>
+            </div>
+
+            <div class="video-container" style="aspect-ratio: 16/9;">
+                <iframe src="https://player.vimeo.com/video/1167025212?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="SnippetPezGordo.v1"></iframe>
+            </div>
+        </div>
+
+        <h2 class="light-subtitle" style="font-size: 20px; margin-top: 40px;">Collaborations</h2>
+        <p>RedBull  |  La Oreja Lab  |  Entel  |  Nova  |  Studio Greece  |  LikeTnn  |  Division Rec  |  Marcokein  |  Oasis</p>
+    </section>
+
+    <hr>
+
+    <section data-aos="fade-up">
+        <div class="section-header">
+            <h2 class="light-subtitle unified-title">Featured Projects</h2>
+        </div>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="still-wrapper">
+                    <img src="https://i.imgur.com/pbgSukD.jpeg" class="still-img" alt="Project Still">
+                </div>
+                <div class="project-credits">
+                    <strong>POLIMANIA</strong>
+                    Escrito y Dirigido por Ismael Valdeavellano<br>
+                    Producido por Ismael Valdeavellano, Benjamin Pizarro<br>
+                    DP: Alex Miranda / Colorista: Pamela Valenzuela<br> Diseño y mezcla: Ignacio Cubillos
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="still-wrapper">
+                    <img src="https://i.imgur.com/vOQ61R3.jpeg" class="still-img" alt="Project Still">
+                </div>
+                <div class="project-credits">
+                    <strong>EL HEDONISTA</strong>
+                    Escrito y Dirigido por Ismael Valdeavellano<br>Edición: Tadeo Bouillon<br>
+                    Colorista: Pamela Valenzuela
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="contact-section" data-aos="zoom-in">
+        <h2 class="light-subtitle" style="font-size: 24px;">Contact</h2>
+        <div class="contact-btns">
+            <a href="mailto:ismael.valdea@gmail.com" class="btn">GMAIL</a>
+            <a href="https://instagram.com/ismaelvaldeavellano" class="btn">INSTAGRAM</a>
+            <a href="https://wa.me/569976483008" class="btn">WHATSAPP</a>
+        </div>
+    </section>
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+        function animateCounter(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                let progress = Math.min((timestamp - startTime) / duration, 1);
+                let easeProgress = progress * progress;
+                obj.innerText = (easeProgress * (end - start) + start).toFixed(1);
+                if (progress < 1) window.requestAnimationFrame(step);
+            }
+            window.requestAnimationFrame(step);
+        }
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting){
+                animateCounter("count", 0, 1.8, 1200);
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.getElementById("count"));
+    </script>
+</body>
+</html>
