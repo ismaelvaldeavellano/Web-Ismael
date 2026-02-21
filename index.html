@@ -33,6 +33,7 @@
 
         hr { border: 0; border-top: 1px solid var(--line-color); margin: 50px 0; }
 
+        /* HEADER */
         header { 
             padding: 100px 0 40px 0; 
             display: flex; 
@@ -53,17 +54,20 @@
         .vertical-line { border-left: 1px solid var(--line-color); height: 18px; margin: 0 25px; }
         .sub-header span { font-family: 'Roboto', sans-serif; font-weight: 200; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; color: var(--text-dim); }
 
+        /* BIOGRAFÍA */
         .bio-section { display: flex; gap: 50px; align-items: center; margin: 60px 0; }
-        .bio-img-container { width: 45%; overflow: hidden; border-radius: 20px; }
+        .bio-img-container { width: 45%; border-radius: 20px; overflow: hidden; }
         .bio-img { width: 100%; display: block; transition: var(--transition); filter: grayscale(40%); }
         .bio-img:hover { transform: scale(1.05); filter: grayscale(0%); }
         .bio-text { width: 55%; font-size: 18px; }
 
+        /* LAURELES */
         .laurels-section { display: flex; justify-content: space-around; align-items: center; padding: 15px 0; }
         .laurel-item { width: 110px; transition: var(--transition); opacity: 0.7; }
         .laurel-item:hover { transform: translateY(-8px) scale(1.1); opacity: 1; }
         .panoramic-text { font-size: 11px; max-width: 130px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; }
 
+        /* SECCIONES */
         .section-header { 
             display: flex; 
             justify-content: space-between; 
@@ -72,32 +76,44 @@
         }
         .unified-title { font-size: var(--section-title-size); margin: 0; }
         
-        /* CLIENT WORK GRID */
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 30px 0; }
+        /* VIDEO GRID (ESTA ES LA PARTE CLAVE) */
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            margin: 30px 0; 
+        }
         
-        /* Ajuste para que el contenedor respete el aspect ratio del embed */
         .video-container { 
             position: relative; 
             width: 100%;
-            aspect-ratio: 9/16; /* Formato vertical por defecto */
+            aspect-ratio: 9/16; /* Formato vertical uniforme para todos */
+            background: #000; 
             border-radius: 15px; 
             overflow: hidden; 
             transition: var(--transition);
-            background: #000;
         }
 
-        /* Clase especial si quieres que los horizontales se vean distintos, 
-           pero por diseño de grid 1:1:1 suele ser mejor que todos sigan el mismo ratio o usar object-fit */
-        .video-container.horizontal { aspect-ratio: 16/9; }
+        .video-container:hover { 
+            transform: scale(1.03); 
+            z-index: 10; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8); 
+        }
 
-        .video-container:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 15px 40px rgba(0,0,0,0.8); }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        
+        .video-container iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            border: 0; 
+        }
+
         .counter { font-size: 38px; font-family: 'Roboto', sans-serif; font-weight: 800; }
 
+        /* FEATURED PROJECTS */
         .projects-container { display: flex; gap: 40px; margin-bottom: 40px; }
         .project-card { width: 50%; display: flex; flex-direction: column; gap: 20px; }
-        
         .still-wrapper { 
             width: 100%; 
             aspect-ratio: 16/9; 
@@ -112,14 +128,11 @@
             transition: var(--transition); 
             cursor: pointer;
         }
-        .still-wrapper:hover .still-img { 
-            transform: scale(1.1); 
-            filter: brightness(1.1); 
-        }
-
+        .still-wrapper:hover .still-img { transform: scale(1.1); filter: brightness(1.1); }
         .project-credits { font-size: 13px; border-left: 1px solid var(--line-color); padding-left: 15px; color: var(--text-dim); }
         .project-credits strong { color: var(--text-main); font-size: 16px; display: block; margin-bottom: 5px; }
 
+        /* CONTACT */
         .contact-section { padding: 60px 0 120px 0; text-align: center; }
         .contact-btns { display: flex; justify-content: center; gap: 25px; margin-top: 40px; }
         .btn { 
@@ -132,13 +145,15 @@
             font-weight: 600;
             transition: var(--transition); 
         }
-        .btn:hover { background: var(--text-main); color: var(--bg-color); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        .btn:hover { background: var(--text-main); color: var(--bg-color); transform: translateY(-3px); }
 
+        /* RESPONSIVE */
         @media (max-width: 900px) {
-            .hero-name { font-size: 55px; }
+            .hero-name { font-size: 50px; }
             .bio-section, .video-grid, .projects-container { flex-direction: column; }
             .bio-img-container, .bio-text, .project-card { width: 100%; }
-            .video-container { aspect-ratio: 16/9; } /* En móvil se ven mejor horizontales */
+            .video-grid { grid-template-columns: 1fr; }
+            .video-container { aspect-ratio: 16/9; } /* En móvil se ven mejor horizontales para no ocupar tanto scroll */
         }
     </style>
 </head>
@@ -158,7 +173,7 @@
             <img src="https://i.imgur.com/A8MMYz9.png" class="bio-img" alt="Ismael Valdeavellano">
         </div>
         <div class="bio-text">
-            <p>A la temprana edad de 18 años, Ismael Valdeavellano es un cineasta chileno reconocido por su visión autoral y su proyección internacional. Director premiado en distintos festivales, ha desarrollado una trayectoria marcada por una búsqueda constante de autenticidad y riesgo creativo.</p>
+            <p>A la temprana edad de 18 años, Ismael Valdeavellano es un cineasta chileno reconocido por su visión autoral y su proyección internacional. Director premiado en distintos festivales, ha desarrollado una trayectoria marcada por una búsqueda constante de autenticidad y riesgo creativo. Se especializa en dirección, edición y producción, construyendo obras donde la narrativa y el lenguaje visual dialogan con una identidad clara y contemporánea.</p>
         </div>
     </section>
 
@@ -182,21 +197,18 @@
                 <span id="count" class="counter">0</span><span class="counter">M</span>
             </div>
         </div>
-
+        
         <div class="video-grid">
             <div class="video-container">
-                <iframe src="https://player.vimeo.com/video/1167024113?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="RedBull Symphonic"></iframe>
+                <iframe src="https://player.vimeo.com/video/1167024113?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="RedBull Symphonic"></iframe>
             </div>
 
-            <div class="video-container" style="aspect-ratio: 16/9;">
-                <iframe src="https://player.vimeo.com/video/1167024762?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="HACKATALENTREEL V2"></iframe>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1167024762?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="HACKATALENTREEL V2"></iframe>
             </div>
 
-            <div class="video-container" style="aspect-ratio: 16/9;">
-                <iframe src="https://player.vimeo.com/video/1167025212?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="SnippetPezGordo.v1"></iframe>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1167025212?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="SnippetPezGordo.v1"></iframe>
             </div>
         </div>
 
@@ -250,6 +262,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1200, once: true });
+        
         function animateCounter(id, start, end, duration) {
             let obj = document.getElementById(id);
             let startTime = null;
@@ -262,6 +275,7 @@
             }
             window.requestAnimationFrame(step);
         }
+
         const observer = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting){
                 animateCounter("count", 0, 1.8, 1200);
