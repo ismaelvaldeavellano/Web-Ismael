@@ -53,15 +53,9 @@
         .vertical-line { border-left: 1px solid var(--line-color); height: 18px; margin: 0 25px; }
         .sub-header span { font-family: 'Roboto', sans-serif; font-weight: 200; text-transform: uppercase; letter-spacing: 4px; font-size: 13px; color: var(--text-dim); }
 
-        /* BIOGRAFÍA (Foto estática) */
         .bio-section { display: flex; gap: 50px; align-items: center; margin: 60px 0; }
         .bio-img-container { width: 45%; border-radius: 20px; overflow: hidden; }
-        .bio-img { 
-            width: 100%; 
-            display: block; 
-            /* Hemos quitado los filtros y las transiciones de hover */
-            filter: grayscale(0%); 
-        }
+        .bio-img { width: 100%; display: block; filter: grayscale(0%); }
         .bio-text { width: 55%; font-size: 18px; }
 
         .laurels-section { 
@@ -74,7 +68,7 @@
         }
         .laurel-item { width: 110px; transition: var(--transition); opacity: 0.7; }
         .laurel-item:hover { transform: translateY(-8px) scale(1.1); opacity: 1; }
-        .panoramic-text { font-size: 11px; max-width: 130px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; text-align: center; }
+        .panoramic-text { font-size: 11px; max-width: 150px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 1px; text-align: center; }
 
         .section-header { 
             display: flex; 
@@ -142,8 +136,9 @@
             .video-container { aspect-ratio: 9/16; width: 90%; margin: 0 auto; }
             .projects-container { flex-direction: column; }
             .project-card { width: 100%; }
-            .laurels-section { flex-direction: column; }
-            .laurels-section span { display: none; }
+            .laurels-section { flex-direction: column; text-align: center; }
+            .panoramic-text { display: block; margin-bottom: 10px; max-width: 100%; }
+            .laurels-section span.panoramic-text:nth-child(4) { display: none; } 
         }
     </style>
 </head>
@@ -171,7 +166,6 @@
 
     <section class="laurels-section" data-aos="fade-in">
         <span class="panoramic-text">Official Selection & Awards</span>
-        <img src="https://i.imgur.com/pjnlOSv.png" class="laurel-item" alt="Award">
         <img src="https://i.imgur.com/0EpZz3u.png" class="laurel-item" alt="Award">
         <span class="panoramic-text">|</span>
         <img src="https://i.imgur.com/nTGcsB6.png" class="laurel-item" alt="Award">
@@ -184,7 +178,7 @@
             <h2 class="light-subtitle unified-title">Client Work</h2>
             <div class="counter-container">
                 <span class="light-subtitle" style="font-size: 14px;">Total Views: </span>
-                <span id="count" class="counter">0</span><span class="counter">M</span>
+                <span id="count" class="counter">0.0</span><span class="counter">M</span>
             </div>
         </div>
         
@@ -238,9 +232,9 @@
     <section class="contact-section" data-aos="zoom-in">
         <h2 class="light-subtitle" style="font-size: 24px;">Contact</h2>
         <div class="contact-btns">
-            <a href="mailto:ismael.valdea@gmail.com" class="btn">GMAIL</a>
-            <a href="https://instagram.com/ismaelvaldeavellano" class="btn">INSTAGRAM</a>
-            <a href="https://wa.me/569976483008" class="btn">WHATSAPP</a>
+            <a href="mailto:ismael.valdea@gmail.com" target="_blank" rel="noopener noreferrer" class="btn">GMAIL</a>
+            <a href="https://instagram.com/ismaelvaldeavellano" target="_blank" rel="noopener noreferrer" class="btn">INSTAGRAM</a>
+            <a href="https://wa.me/56976483008" target="_blank" rel="noopener noreferrer" class="btn">WHATSAPP</a>
         </div>
     </section>
 
@@ -252,22 +246,32 @@
         function animateCounter(id, start, end, duration) {
             let obj = document.getElementById(id);
             let startTime = null;
+            
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 let progress = Math.min((timestamp - startTime) / duration, 1);
-                let easeProgress = progress * progress;
-                obj.innerText = (easeProgress * (end - start) + start).toFixed(1);
-                if (progress < 1) window.requestAnimationFrame(step);
+                
+                // Curva de animación "Ease-Out" (más lenta al final)
+                let easeProgress = 1 - Math.pow(1 - progress, 3);
+                
+                let currentVal = (easeProgress * (end - start) + start);
+                obj.innerText = currentVal.toFixed(1);
+                
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
             }
             window.requestAnimationFrame(step);
         }
 
         const observer = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting){
-                animateCounter("count", 0, 1.8, 1200);
+                // Aumentado a 2500ms para una animación más pausada y visible
+                animateCounter("count", 0, 1.8, 2500);
                 observer.disconnect();
             }
-        });
+        }, { threshold: 0.5 }); // Se activa cuando el 50% del contador es visible
+
         observer.observe(document.getElementById("count"));
     </script>
 </body>
